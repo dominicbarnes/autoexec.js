@@ -21,9 +21,11 @@ Usage
 
 **JavaScript**
 
-   // BEFORE the document.ready event...
-   // register a single page's init code
-   $.autoExec.registerPage("page-name", function () { ... });
-   // register a behavior's init code
-   $.autoExec.registerBehavior("maps", function () { ... init Google Maps API or something ... })
-   $.autoExec.registerBehavior("forms", function () { ... form validation basics or something ... })
+    // BEFORE the document.ready event...
+    
+    // register a single page's init code
+    $.autoExec.registerPage("page-name", function () { ... });
+    
+    // register a behavior's init code
+    $.autoExec.registerBehavior("maps", function () { ... init Google Maps API or something ... })
+    $.autoExec.registerBehavior("forms", function () { ... form validation basics or something ... })
