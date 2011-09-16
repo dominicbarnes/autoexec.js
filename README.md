@@ -9,7 +9,7 @@ your body tag's id and class. This allows you to modularize some of that boilerp
 code, as well as concat it all into 1 cacheable script without causing interference
 between all those pages.
 
-The inspiration came from Paul Irish's concept and idea, [Markup-based unobtrusive comprehensive DOM-ready execution](paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/).
+The inspiration came from Paul Irish's concept and idea, [Markup-based unobtrusive comprehensive DOM-ready execution](http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/).
 
 
 Usage
