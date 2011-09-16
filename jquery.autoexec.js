@@ -1,38 +1,10 @@
 /**
  * Boilerplate code to set up a "DOM-Based Execution Model" for JS code
+ * This code won't remain jQuery-specific forever, I promise :)
  *
  * @inspiration http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/
  *
  * @author Dominic Barnes
- *
- * --------------------------------------------------------------------
- *
- * A lot of front-end code (not libs) that initializes plugins on the page is either
- * used only 1 time for a very specific #id, or they are called many times on different
- * pages, using a common .class to tie them together.
- *
- * For scripts only used "one time", (ie. on 1 specific page) you either create an
- * entire script that only gets <script> included on that one page. Or, you could
- * create some global var to keep track of the current page id that you check before running.
- *
- * Also, consider certain plugins that appear frequently on your site, but not everywhere
- * and all the time. Usually, using a common class name and applying to those classes
- * on each page load will work, but that DOM query has to be run each and every page.
- *
- * This model can also be applied for CSS, it's not only for JS.
- * Assign each page a unique #id, that gets applied to the body tag.
- *
- * Also, break up your "boilerplate code" into small, reusable modules.
- * For each page, add a .class to the body for each of those modules you'll need
- *
- * Before your document.ready fires, make sure to register all your "pages" and "behaviors"
- * via $.autoExec.registerPage("page-id", fn) and $.autoExec.registerBehavior("module-id", fn)
- *
- * $.autoExec will handle the rest :)
- * Use `$.autoExec.debug = true;` to see what's going on behind the scenes
- *
- * Creating and registering a "common" behavior in your init code will cause
- * it to run for all pages as well, just for your convenience.
  */
 (function ($) {
 	// wrapper for console.log that includes the plugin name
