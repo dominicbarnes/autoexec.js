@@ -9,7 +9,7 @@
 (function ($) {
 	// wrapper for console.log that includes the plugin name
 	function log() {
-		if ($.autoInit.debug && window.console) {
+		if ($.autoExec.debug && window.console) {
 			console.log(["autoExec"].concat(Array.prototype.slice.call(arguments)));
 		}
 	}
@@ -17,7 +17,7 @@
 	// we'll use the jQuery namespace, no need for operating on jQuery collections
 	$.autoExec = {
 		// the only real config option at this point
-		debug: false,
+		debug: true,
 
 		// holds the functions that have been registered
 		funcs: {
@@ -38,8 +38,14 @@
 		 * @return {undefined|function}
 		 */
 		register: function (type, id, fn) {
-			if (typeof fn === "function") {
+			if ($.isFunction(fn)) {
+				log(type, "register", id);
 				this.funcs[type][id] = fn;
+			} else if ($.isPlainObject(id)) {
+				$.each(id, function (id, fn) {
+					var capTitle = type[0].toUpperCase() + type.slice(1);
+					$.autoExec["register" + capTitle](id, fn);
+				});
 			} else {
 				return this.funcs[type][id];
 			}
@@ -80,7 +86,7 @@
 		$.each(["common"].concat(behaviors), function (x, behavior) {
 			// we only try and execute if we have a registered handler
 			if (behavior in funcs.behavior) {
-				log("Setting up behavior", behavior);
+				log("behavior", "run", behavior);
 				funcs.behavior[behavior]();
 			} else {
 				log("This behavior has not been registered", behavior);
@@ -89,7 +95,7 @@
 
 		// since there is only 1 id, no loop needed here
 		if (page && page in funcs.page) {
-			log("Setting up page", page);
+			log("page", "run", page);
 			funcs.page[page]();
 		} else {
 			log("This page has not been registered", page);
