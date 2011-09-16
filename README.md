@@ -17,7 +17,7 @@ Usage
 
 **HTML**
 
-   <body id="page-name" class="maps forms">
+    <body id="page-name" class="maps forms">
 
 **JavaScript**
 
