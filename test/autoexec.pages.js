@@ -1,5 +1,7 @@
 (function ($) {
-	var AE = $.autoExec;
+	var AE = AUTOEXEC;
+	AE.registerIgnore("users");
+	AE.registerIgnore(/^widget\-[0-9]+$/);
 
 	AE.registerPage("user-dashboard", $.noop);
 	AE.registerPage({
@@ -8,8 +10,12 @@
 	});
 
 	AE.registerBehavior("common", $.noop);
+	AE.registerBehavior("users", $.noop);
+	AE.registerBehavior("dashboard", $.noop);
 	AE.registerBehavior({
-		"users": $.noop,
-		"dashboard": $.noop
+		"widget-1": $.noop,
+		"widget-2": $.noop,
+		"widget-a": $.noop,
+		"widget-b": $.noop
 	});
 })(jQuery);
