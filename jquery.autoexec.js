@@ -8,16 +8,28 @@
  */
 (function ($) {
 	// wrapper for console.log that includes the plugin name
-	function log() {
-		if ($.autoExec.debug && window.console) {
-			console.log(["autoExec"].concat(Array.prototype.slice.call(arguments)));
+	var log = (function () {
+		if (Function.prototype.bind && console) {
+			if (typeof console.log === "object") {
+				["log","info","warn","error","assert","dir","clear","profile","profileEnd"].forEach(function (method) {
+					console[method] = this.bind(console[method], console);
+				}, Function.prototype.call);
+			}
+
+			return function (level) {
+				if ($.autoExec.debug) {
+					console[level].apply(console, ["autoExec"].concat(Array.prototype.slice.call(arguments, 1)));
+				}
+			};
+		} else {
+			return $.noop;
 		}
-	}
+	})();
 
 	// we'll use the jQuery namespace, no need for operating on jQuery collections
 	$.autoExec = {
 		// the only real config option at this point
-		debug: true,
+		debug: false,
 
 		// holds the functions that have been registered
 		funcs: {
@@ -39,7 +51,7 @@
 		 */
 		register: function (type, id, fn) {
 			if ($.isFunction(fn)) {
-				log(type, "register", id);
+				log("log", type, id, "(register)");
 				this.funcs[type][id] = fn;
 			} else if ($.isPlainObject(id)) {
 				$.each(id, function (id, fn) {
@@ -80,25 +92,34 @@
 		var body = document.body,                    // cache body element
 			funcs = $.autoExec.funcs,                // cache funcs object
 			page = body.id,                          // store as page id
-			behaviors = body.className.split(/\s+/); // store as behavior list
+			behaviors = body.className.split(/\s+/), // store as behavior list
+			ignore = /outer/;
 
 		// prepend "common" before looping each of the configured behaviors
 		$.each(["common"].concat(behaviors), function (x, behavior) {
+			if (!behavior) return;
+			if (ignore && ignore.test(behavior)) {
+				log("warn", "behavior", behavior, "(ignored)");
+				return;
+			}
+
 			// we only try and execute if we have a registered handler
 			if (behavior in funcs.behavior) {
-				log("behavior", "run", behavior);
+				log("log", "behavior", behavior, "(run)");
 				funcs.behavior[behavior]();
 			} else {
-				log("This behavior has not been registered", behavior);
+				log("warn", "behavior", behavior, "(not registered)");
 			}
 		});
 
 		// since there is only 1 id, no loop needed here
-		if (page && page in funcs.page) {
-			log("page", "run", page);
-			funcs.page[page]();
-		} else {
-			log("This page has not been registered", page);
+		if (page) {
+			if (page in funcs.page) {
+				log("log", "page", page, "(run)");
+				funcs.page[page]();
+			} else {
+				log("warn", "page", page, "(not registered)");
+			}
 		}
 	});
 })(jQuery);
