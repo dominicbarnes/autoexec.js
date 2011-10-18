@@ -2,7 +2,7 @@ JavaScript Automatic Execution
 ==============================
 
 Inspiration from Paul Irish's concept and idea,
-[Markup-based unobtrusive comprehensive DOM-ready execution](paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/).
+[Markup-based unobtrusive comprehensive DOM-ready execution](http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/).
 
 What?
 -----
